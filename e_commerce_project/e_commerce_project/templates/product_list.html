@@ -1,0 +1,28 @@
+<!-- base.html에서 상속: 공통 레이아웃과 스타일을 제공하는 기본 템플릿 -->
+{% extends 'base.html' %}
+
+<!-- base.html의 content 블록을 오버라이드: 페이지의 주요 내용을 정의 -->
+{% block content %}
+    <h1>제품 목록</h1>
+    
+    <!-- 제품 목록을 동적으로 표시하는 부분 -->
+    <ul>
+        {% for product in products %}
+        <li>
+            <!-- 각 제품의 이름과 설명을 표시 -->
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            
+            <!-- 제품의 가격을 표시 -->
+            <p>가격: {{ product.price }}</p>
+            
+            <!-- 제품 상세 페이지로의 링크 -->
+            <!-- 여기서 'product_detail'은 urls.py에서 정의한 URL의 이름 -->
+            <a href="{% url 'product_detail' product.id %}">상세보기</a>
+        </li>
+        {% empty %}
+        <!-- 제품이 없을 경우 표시할 메시지 -->
+        <li>제품이 없습니다.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
