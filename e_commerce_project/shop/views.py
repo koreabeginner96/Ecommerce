@@ -5,6 +5,8 @@ from django.views import generic
 from .forms import CustomUserCreationForm  # 커스텀 회원가입 폼 사용
 from django.shortcuts import redirect, get_object_or_404
 from .models import Product, CartItem
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile
 
 
 class SignUpView(generic.CreateView):
@@ -53,3 +55,10 @@ def cart_detail(request):
         item.total_price = item.product.price * item.quantity
 
     return render(request, 'shop/cart_detail.html', {'cart_items': cart_items})
+#사용자 프로필 페이지에 접근할 때, UserProfile 인스턴스가 없다면 생성하도록 코드를 수정
+def profile(request):
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        profile = UserProfile.objects.create(user=request.user)
+    return render(request, 'accounts/profile.html', {'profile': profile})

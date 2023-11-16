@@ -1,0 +1,8 @@
+<!-- 프로필 페이지 템플릿 -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ user.username }}의 프로필</h1>
+<!-- 사용자 프로필 정보 표시 -->
+<p>{{ profile.bio }}</p>
+{% endblock %}

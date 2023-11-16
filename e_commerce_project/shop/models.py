@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # 카테고리 모델: 제품을 분류하기 위한 모델
 class Category(models.Model):
@@ -21,7 +22,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name  # 객체를 문자열로 표현할 때 제품 이름을 사용
-
+#장바구니
 class CartItem(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='cart_items')
     product = models.ForeignKey('Product', on_delete=models.CASCADE)  # 'Product'를 문자열로 참조
@@ -35,3 +36,12 @@ class CartItem(models.Model):
     @property
     def subtotal(self):
         return self.product.price * self.quantity  # 항목의 소계를 계산
+#사용자 정보  
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # User 모델과 1:1 관계
+    bio = models.TextField(max_length=500, blank=True)  # 사용자 소개
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)  # 새로운 User 인스턴스가 생성될 때 UserProfile도 자동 생성
