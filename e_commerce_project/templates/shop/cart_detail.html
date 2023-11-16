@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>장바구니</h2>
+    {% if cart_items %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>제품</th>
+                <th>가격</th>
+                <th>수량</th>
+                <th>합계</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price }}</td>
+                <td>
+                    <!-- 수량 조절 및 제품 제거 기능 버튼 (추후 구현) -->
+                    <a href="#" class="btn btn-sm btn-outline-secondary">수정</a>
+                    <a href="#" class="btn btn-sm btn-outline-danger">제거</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right">
+        <!-- 체크아웃 버튼 (추후 구현) -->
+        <a href="#" class="btn btn-primary">체크아웃</a>
+    </div>
+    {% else %}
+    <p>장바구니가 비어 있습니다.</p>
+    {% endif %}
+</div>
+{% endblock %}

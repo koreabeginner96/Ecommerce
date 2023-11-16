@@ -1,0 +1,22 @@
+<!-- base.html에서 상속 -->
+{% extends 'base.html' %}
+
+<!-- base.html의 content 블록을 오버라이드 -->
+{% block content %}
+    <div>
+        <!-- 제품 상세 정보 표시 -->
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <p>가격: {{ product.price }}</p>
+        <p>재고: {{ product.stock }}</p>
+
+        <!-- "장바구니에 추가" 버튼 -->
+        <form action="{% url 'add_to_cart' product.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">장바구니에 추가</button>
+        </form>
+
+        <!-- "돌아가기" 링크 - 제품 목록 페이지로 돌아감 -->
+        <a href="{% url 'product_list' %}">제품 목록으로 돌아가기</a>
+    </div>
+{% endblock %}
