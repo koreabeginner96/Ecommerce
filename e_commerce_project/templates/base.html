@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-    <!-- 기타 메타 태그와 스크립트 -->
+    <!-- 헤더 관련 태그 -->
 </head>
 <body>
-    {% block content %}
-    <!-- 페이지 별 내용이 여기 들어갑니다 -->
-    {% endblock %}
+    <header>
+        <nav>
+            <!-- 다른 네비게이션 링크 -->
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">로그아웃</a>
+            {% else %}
+                <a href="{% url 'login' %}">로그인</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- 페이지 본문 -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- 푸터 -->
+    <footer>
+    </footer>
 </body>
 </html>
