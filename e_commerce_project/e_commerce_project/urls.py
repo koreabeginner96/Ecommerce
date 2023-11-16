@@ -7,6 +7,7 @@ from django.urls import path, include  # include 함수를 임포트
 from shop import views
 from shop.views import SignUpView
 from shop.views import profile
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),           # 관리자 페이지
@@ -21,4 +22,6 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('accounts/profile/', profile, name='profile'),  # 프로필 페이지 URL 설정
+    path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),#URL은 Django의 기본 비밀번호 변경 뷰를 사용합니다.
+    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),#사용자가 비밀번호를 성공적으로 변경한 후에 표시되는 페이지를 위한 URL입니다.
 ]

@@ -7,7 +7,8 @@ from django.shortcuts import redirect, get_object_or_404
 from .models import Product, CartItem
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-
+from django.contrib.auth.models import User
+from .forms import UserProfileForm, UserForm
 
 class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm  # 커스텀 회원가입 폼 지정
@@ -57,8 +58,28 @@ def cart_detail(request):
     return render(request, 'shop/cart_detail.html', {'cart_items': cart_items})
 #사용자 프로필 페이지에 접근할 때, UserProfile 인스턴스가 없다면 생성하도록 코드를 수정
 def profile(request):
+    # UserProfile 인스턴스가 존재하지 않을 경우 생성
     try:
         profile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
         profile = UserProfile.objects.create(user=request.user)
-    return render(request, 'accounts/profile.html', {'profile': profile})
+
+    if request.method == 'POST':
+        # POST 요청일 경우, 폼 데이터를 처리
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, instance=profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            # 추가: 성공 메시지 표시나 리디렉션 등의 로직을 여기에 추가할 수 있습니다.
+            return redirect('profile')  # 수정 후 프로필 페이지로 리디렉션
+    else:
+        # GET 요청일 경우, 빈 폼을 렌더링
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=profile)
+
+    return render(request, 'accounts/profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })

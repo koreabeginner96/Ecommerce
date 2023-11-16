@@ -40,6 +40,8 @@ class CartItem(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)  # User 모델과 1:1 관계
     bio = models.TextField(max_length=500, blank=True)  # 사용자 소개
+    birthday = models.DateField(null=True, blank=True)  # 생일 필드 추가
+    gender = models.CharField(max_length=10, blank=True)  # 성별 필드 추가
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

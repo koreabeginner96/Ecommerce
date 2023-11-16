@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from .models import UserProfile
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text='유효한 이메일 주소를 입력하세요.')
@@ -23,3 +24,12 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['bio', 'birthday', 'gender']  # 예시 필드
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']

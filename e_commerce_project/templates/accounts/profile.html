@@ -1,8 +1,12 @@
-<!-- 프로필 페이지 템플릿 -->
 {% extends 'base.html' %}
 
 {% block content %}
 <h1>{{ user.username }}의 프로필</h1>
-<!-- 사용자 프로필 정보 표시 -->
-<p>{{ profile.bio }}</p>
+<a href="{% url 'password_change' %}" class="btn btn-primary">비밀번호 변경</a>
+<form method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <button type="submit">업데이트</button>
+</form>
 {% endblock %}
