@@ -11,3 +11,6 @@ def product_list(request):
 def product_detail(request, id):
     product = Product.objects.get(id=id)  # 특정 id의 제품을 조회
     return render(request, 'shop/product_detail.html', {'product': product})
+
+def home(request):
+    return render(request, 'home.html')  # 'home.html'은 이 view에 해당하는 템플릿 파일입니다.
