@@ -11,6 +11,11 @@ from django.contrib.auth.models import User
 from .forms import UserProfileForm, UserForm
 from .models import OrderItem, Order
 from .forms import OrderCreateForm
+from django.conf import settings
+from .models import CartItem
+
+IAMPORT_API_KEY = '7042428545746337'
+IAMPORT_API_SECRET = 'gCRrxJlD83Gm4yYjqYZcJry9CqAIuXEVCHYPkIAJtCJQOXqc9UofodeTMJpFH0h8N1Vgt2ERn9YKtDCz'
 
 class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm  # 커스텀 회원가입 폼 지정
@@ -53,11 +58,15 @@ def cart_detail(request):
     현재 로그인한 사용자의 장바구니 항목들을 조회하여 표시합니다.
     """
     cart_items = CartItem.objects.filter(user=request.user)  # 현재 사용자의 장바구니 항목을 가져옵니다.
+    total_price = CartItem.get_cart_total(request.user)
     # 각 장바구니 항목에 대한 총 가격 계산
     for item in cart_items:
         item.total_price = item.product.price * item.quantity
 
-    return render(request, 'shop/cart_detail.html', {'cart_items': cart_items})
+    return render(request, 'shop/cart_detail.html', {'cart_items': cart_items,'total_price': total_price })
+
+
+
 #사용자 프로필 페이지에 접근할 때, UserProfile 인스턴스가 없다면 생성하도록 코드를 수정
 def profile(request):
     # UserProfile 인스턴스가 존재하지 않을 경우 생성
@@ -102,3 +111,40 @@ def order_create(request):
     else:
         form = OrderCreateForm()  # GET 요청시 폼 표시
     return render(request, 'orders/create.html', {'form': form})
+
+def payment_process(request):
+    order_id = request.session.get('order_id')
+    order = Order.objects.get(id=order_id)
+    
+    if request.method == 'POST':
+        try:
+            response = requests.post("https://api.iamport.kr/users/getToken", data={
+                'imp_key': settings.IAMPORT_API_KEY,
+                'imp_secret': settings.IAMPORT_API_SECRET
+            })
+            access_token = response.json()['response']['access_token']
+
+            response = requests.post("https://api.iamport.kr/payments/payment", headers={
+                'Authorization': access_token
+            }, data={
+                'merchant_uid': order.id,  # 주문 번호
+                'amount': order.get_total_cost(),  # 결제 금액
+                # 기타 필요한 데이터
+            })
+
+            # 결제 처리 결과에 따른 로직 구현
+            # 예: response.json()의 내용에 따라 처리
+            return redirect('payment:done')
+        except:
+            return redirect('payment:canceled')
+    else:
+        # 결제 페이지 표시
+        return render(request, 'payment/process.html', {'order': order})
+    
+def payment_done(request):
+    # 결제 완료 페이지 로직
+    return render(request, 'payment/done.html')
+
+def payment_canceled(request):
+    # 결제 실패 페이지 로직
+    return render(request, 'payment/canceled.html')

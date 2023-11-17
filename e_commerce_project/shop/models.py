@@ -33,6 +33,14 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.product.name} ({self.quantity})"
+#장바구니 total amount
+    @staticmethod
+    def get_cart_total(user):
+        total = 0
+        cart_items = CartItem.objects.filter(user=user)
+        for item in cart_items:
+            total += item.product.price * item.quantity
+        return total
 
     @property
     def subtotal(self):
