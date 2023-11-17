@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 # 카테고리 모델: 제품을 분류하기 위한 모델
 class Category(models.Model):
     name = models.CharField(max_length=100)  # 카테고리 이름
@@ -47,3 +48,28 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)  # 새로운 User 인스턴스가 생성될 때 UserProfile도 자동 생성
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # 주문한 사용자
+    created_at = models.DateTimeField(auto_now_add=True)  # 주문 생성 시간
+    updated_at = models.DateTimeField(auto_now=True)  # 주문 업데이트 시간
+    paid = models.BooleanField(default=False)  # 결제 여부
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    address = models.CharField(max_length=250)
+    postal_code = models.CharField(max_length=20)
+    city = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'Order {self.id}'
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)  # 해당 주문
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)  # 주문한 제품
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # 제품 가격
+    quantity = models.PositiveIntegerField(default=1)  # 수량
+
+    def __str__(self):
+        return str(self.id)

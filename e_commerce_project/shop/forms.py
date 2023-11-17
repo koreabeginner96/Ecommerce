@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from .models import UserProfile
+from .models import Order
+
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text='유효한 이메일 주소를 입력하세요.')
@@ -33,3 +35,16 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+
+class OrderCreateForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['first_name', 'last_name', 'email', 'address', 'postal_code', 'city']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': '이름'}),
+            'last_name': forms.TextInput(attrs={'placeholder': '성'}),
+            'email': forms.EmailInput(attrs={'placeholder': '이메일'}),
+            'address': forms.TextInput(attrs={'placeholder': '주소'}),
+            'postal_code': forms.TextInput(attrs={'placeholder': '우편번호'}),
+            'city': forms.TextInput(attrs={'placeholder': '도시'}),
+        }

@@ -24,4 +24,5 @@ urlpatterns = [
     path('accounts/profile/', profile, name='profile'),  # 프로필 페이지 URL 설정
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),#URL은 Django의 기본 비밀번호 변경 뷰를 사용합니다.
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),#사용자가 비밀번호를 성공적으로 변경한 후에 표시되는 페이지를 위한 URL입니다.
+    path('order/create/', views.order_create, name='order_create'),# 주문 생성 페이지 URL
 ]
