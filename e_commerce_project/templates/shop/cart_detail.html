@@ -19,18 +19,19 @@
             <tr>
                 <td>{{ item.product.name }}</td>
                 <td>{{ item.product.price }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.total_price }}</td>
                 <td>
-                    <!-- 수량 조절 및 제품 제거 기능 버튼 (추후 구현) -->
-                    <a href="#" class="btn btn-sm btn-outline-secondary">수정</a>
+                    <input type="number" value="{{ item.quantity }}" min="1" class="form-control quantity-update" data-product-id="{{ item.product.id }}">
+                </td>
+                <td id="subtotal-{{ item.product.id }}">{{ item.total_price }}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-secondary update-cart" data-product-id="{{ item.product.id }}">수정</button>
                     <a href="#" class="btn btn-sm btn-outline-danger">제거</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <p>총합: {{ total_price }}</p>
+    <p>총합: <span id="total-price">{{ total_price }}</span></p>
     <div class="text-right">
         <!-- 체크아웃 버튼 (추후 구현) -->
         <a href="{% url 'order_create' %}" class="btn btn-primary">주문하기</a>
@@ -40,4 +41,47 @@
     <p>장바구니가 비어 있습니다.</p>
     {% endif %}
 </div>
+
+<script>
+    document.querySelectorAll('.update-cart').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var productId = this.dataset.productId;
+            var quantity = document.querySelector(`input[data-product-id="${productId}"]`).value;
+            updateQuantity(productId, quantity);
+        });
+    });
+    
+    function updateQuantity(productId, quantity) {
+        fetch(`/cart/update/${productId}/`, {
+            method: 'POST',
+            body: JSON.stringify({'quantity': quantity}),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById(`subtotal-${productId}`).textContent = data.subtotal;
+            document.getElementById('total-price').textContent = data.total;
+        });
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+    
+
 {% endblock %}

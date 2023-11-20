@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include  # include 함수를 임포트
 from shop import views
 from shop.views import SignUpView
-from shop.views import profile
+from shop.views import profile, update_cart
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -28,4 +28,5 @@ urlpatterns = [
     path('payment/process/', views.payment_process, name='payment_process'),# 결제 처리 뷰: 사용자가 결제를 진행하는 과정을 처리합니다.
     path('payment/done/', views.payment_done, name='payment_done'),# 결제 완료 뷰: 결제가 성공적으로 완료되었을 때 표시되는 페이지를 처리합니다.
     path('payment/canceled/', views.payment_canceled, name='payment_canceled'),# 결제 취소 뷰: 결제가 취소되었거나 실패했을 때 표시되는 페이지를 처리합니다.   
+    path('cart/update/<int:product_id>/', update_cart, name='update_cart'),
 ]

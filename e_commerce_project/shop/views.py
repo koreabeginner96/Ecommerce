@@ -13,6 +13,9 @@ from .models import OrderItem, Order
 from .forms import OrderCreateForm
 from django.conf import settings
 from .models import CartItem
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
 
 IAMPORT_API_KEY = '7042428545746337'
 IAMPORT_API_SECRET = 'gCRrxJlD83Gm4yYjqYZcJry9CqAIuXEVCHYPkIAJtCJQOXqc9UofodeTMJpFH0h8N1Vgt2ERn9YKtDCz'
@@ -36,6 +39,7 @@ def product_detail(request, id):
 def home(request):
     return render(request, 'home.html')  # 'home.html'은 이 view에 해당하는 템플릿 파일입니다.
 
+@login_required
 def add_to_cart(request, product_id):
     """
     사용자가 선택한 제품과 수량을 장바구니에 추가합니다.
@@ -65,6 +69,23 @@ def cart_detail(request):
 
     return render(request, 'shop/cart_detail.html', {'cart_items': cart_items,'total_price': total_price })
 
+@require_POST
+def update_cart(request, product_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        quantity = int(data.get('quantity', 0))
+        cart_item = get_object_or_404(CartItem, product_id=product_id, user=request.user)
+        cart_item.quantity = quantity
+        cart_item.save()
+
+        # 개별 합계 및 총 합계 계산
+        subtotal = cart_item.subtotal  # 예를 들어, CartItem 모델에 total_price 필드가 있다고 가정
+        total = sum(item.subtotal for item in CartItem.objects.filter(user=request.user))
+
+        return JsonResponse({'subtotal': subtotal, 'total': total})
+    else:
+        # POST가 아닌 다른 요청에 대한 처리
+        return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 #사용자 프로필 페이지에 접근할 때, UserProfile 인스턴스가 없다면 생성하도록 코드를 수정

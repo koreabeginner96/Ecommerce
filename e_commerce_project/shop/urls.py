@@ -10,4 +10,4 @@ urlpatterns = [
     path('cart/add/<int:product_id>/', add_to_cart, name='add_to_cart'),#제품 추가하는 view
     path('cart_detail/', cart_detail, name='cart_detail'),# 상세 페이지 보여주는 view
     
-]
+]   
