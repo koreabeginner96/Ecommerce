@@ -39,10 +39,11 @@ class UserForm(forms.ModelForm):
 class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'email', 'address', 'postal_code', 'city']
+        fields = ['first_name', 'last_name', 'phone_number','email', 'address', 'postal_code', 'city','payment_method']
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': '이름'}),
             'last_name': forms.TextInput(attrs={'placeholder': '성'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': '전화번호'}),
             'email': forms.EmailInput(attrs={'placeholder': '이메일'}),
             'address': forms.TextInput(attrs={'placeholder': '주소'}),
             'postal_code': forms.TextInput(attrs={'placeholder': '우편번호'}),

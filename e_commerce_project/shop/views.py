@@ -165,6 +165,13 @@ def order_create(request):
         form = OrderCreateForm()  # GET 요청시 폼 표시
     return render(request, 'orders/create.html', {'form': form})
 
+def order_detail(request, order_id):
+    # 주문 번호를 기반으로 주문 객체를 조회
+    order = get_object_or_404(Order, id=order_id)
+
+    # 조회된 주문 객체를 템플릿으로 전달
+    return render(request, 'created.html', {'order': order})
+
 def payment_process(request):
     order_id = request.session.get('order_id')
     order = Order.objects.get(id=order_id)

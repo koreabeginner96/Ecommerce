@@ -2,9 +2,34 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>주문 완료</h2>
-    <p>주문이 성공적으로 완료되었습니다.</p>
-    <p>주문 번호: <strong>{{ order.id }}</strong></p>
-    <a href="{% url 'product_list' %}" class="btn btn-primary">쇼핑 계속하기</a>
+    <h2>주문 확인</h2>
+    <p>아래 정보를 확인하시고 '결제하기' 버튼을 눌러주세요.</p>
+
+    <!-- 주문 정보 표시 -->
+    <div>
+        <h4>주문 번호</h4>
+        <p><strong>{{ order.id }}</strong></p>
+        
+        <h4>주문 상세</h4>
+        <!-- 여기에 사용자가 입력한 주문 정보를 표시 -->
+        <p>이름:{{ order.last_name }} {{ order.first_name }} </p>
+        <p>전화번호: {{order.phone_number}}</p>
+        <p>이메일: {{ order.email }}</p>
+        <p>배송지 주소: {{ order.address }}</p>
+        <p>우편 번호: {{ order.postal_code }}</p>
+        <p>도시: {{ order.city }}</p>
+        <p>결제 방법: {{ order.payment_method }}</p>
+        <!-- 기타 주문 관련 정보 -->
+    </div>
+
+    <!-- 실제 결제 진행 버튼 -->
+    <button type="button" class="btn btn-success" id="final_payment">결제하기</button>
 </div>
+
+<script>
+    document.getElementById('final_payment').addEventListener('click', function() {
+        // 실제 결제 처리 로직
+        // 예: 결제 API 호출 또는 결제 페이지로 리디렉션
+    });
+</script>
 {% endblock %}

@@ -3,12 +3,19 @@
 {% block content %}
 <div class="container mt-4">
     <h2>주문하기</h2>
-    <form method="post" class="form">
+    <form method="post" class="form" id="order_form">
         {% csrf_token %}
         <div class="form-group">
             {{ form.as_p }}
         </div>
-        <button type="submit" class="btn btn-primary">주문 확인</button>
+
+        <!-- 결제 방법 선택 -->
+        <div class="form-group">
+            <label for="payment_method">결제 방법:</label>
+        </div>
+
+        <!-- 주문 및 결제 진행 버튼 -->
+        <button type="submit" class="btn btn-primary">주문 및 결제 진행</button>
     </form>
 </div>
 {% endblock %}
