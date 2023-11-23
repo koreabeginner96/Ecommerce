@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib import messages
+from django.urls import reverse_lazy
 from .models import Product  # 모델 임포트
 from django.urls import reverse_lazy
 from django.views import generic
@@ -22,8 +24,38 @@ IAMPORT_API_SECRET = 'gCRrxJlD83Gm4yYjqYZcJry9CqAIuXEVCHYPkIAJtCJQOXqc9UofodeTMJ
 
 class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm  # 커스텀 회원가입 폼 지정
-    success_url = reverse_lazy('login')  # 회원가입 성공 후 리디렉션할 URL
-    template_name = 'signup.html'        # 사용할 템플릿 지정
+    success_url = reverse_lazy('signup_success')  # 회원가입 성공 후 리디렉션할 URL
+    template_name = 'signup.html'       # 사용할 템플릿 지정
+
+    def form_valid(self, form):
+        # 회원가입 폼이 유효할 경우의 처리
+        self.object = form.save()  # 폼을 저장하고 객체를 생성합니다.
+        messages.success(self.request, '회원가입에 성공했습니다.')  # 성공 메시지 추가
+        # 'signup.html' 템플릿에 signup_success 컨텍스트를 True로 설정하여 렌더링합니다.
+        return render(self.request, 'registration/signup.html', {'signup_success': True})
+
+    def form_invalid(self, form):
+        # 회원가입 폼이 유효하지 않을 경우의 처리
+        for field, errors in form.errors.items():
+            for error in errors:
+                # 오류 메시지를 한글로 변경
+                if error == "This field is required.":
+                    error_message = "이 필드는 필수입니다."
+                else:
+                    error_message = error  # 다른 오류 메시지에 대한 처리
+                messages.error(self.request, f"{form.fields[field].label}: {error_message}")
+        return super().form_invalid(form)
+    
+    def get_context_data(self, **kwargs):
+        # 추가된 context 데이터를 통해 템플릿에 데이터 전달
+        context = super().get_context_data(**kwargs)
+        context['signup_success'] = self.request.GET.get('signup_success', False)
+        return context   
+
+def signup_success(request):
+    # 회원가입 성공 시 렌더링할 뷰
+    return render(request, 'registration/signup.html', {'signup_success': True})
+
 
 def index(request):
     return render(request, 'shop/index.html')
