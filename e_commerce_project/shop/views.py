@@ -118,6 +118,16 @@ def update_cart(request, product_id):
     else:
         # POST가 아닌 다른 요청에 대한 처리
         return JsonResponse({'error': 'Invalid request'}, status=400)
+    
+@require_POST
+def remove_cart(request, product_id):
+    cart_item = get_object_or_404(CartItem, product_id=product_id, user=request.user)
+    cart_item.delete()  # 해당 CartItem 인스턴스를 삭제합니다.
+
+    # 총 합계 재계산
+    total_price = sum(item.subtotal for item in CartItem.objects.filter(user=request.user))
+
+    return JsonResponse({'success': True, 'total_price': total_price})
 
 
 #사용자 프로필 페이지에 접근할 때, UserProfile 인스턴스가 없다면 생성하도록 코드를 수정

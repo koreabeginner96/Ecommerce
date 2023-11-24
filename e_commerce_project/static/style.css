@@ -1,37 +1,243 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+/* 헤더 스타일 */
+header {
+    padding: 10px 0 !important; /* 상하 30px, 좌우 0px의 패딩을 적용 */
+    background-color: #333; /* 헤더 배경색, 기존에 설정한 색상에 맞춤 */
+    color: white; /* 헤더 텍스트 색상을 흰색으로 설정 */
+    text-align: center; /* 텍스트를 중앙 정렬 */
+    margin-bottom: 0;
+    
+}
+h1 {
+    text-align: center; /* 텍스트 중앙 정렬 */
+    width: 100%; /* 너비를 100%로 설정 */
+    margin-top: 20px; /* 위쪽 여백 */
+    margin-bottom: 20px; /* 아래쪽 여백 */
+  }
+/* 헤더 내의 h1 요소 (만약 있을 경우) 스타일 */
+header h1 {
+    padding: 30px 0; /* 상하 30px, 좌우 0px의 패딩을 적용 */
+    margin-top: 0; /* h1 요소의 상단 마진 제거 */
+    margin-bottom: 0; /* h1 요소의 하단 마진 제거 */
+    font-size: 1.5rem; /* 필요에 따라 글꼴 크기 조정 */
+}
+
+body, html {
+    height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 0px;
+    background-color: #333; /* 전체 배경 색상을 어두운 색으로 변경 */
+    color: #fff; /* 기본 텍스트 색상을 흰색으로 변경 */
+    font-family: Arial, sans-serif;
 }
-
-.container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
-}
-
-.header, .footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1em 0;
-}
-
-.product-list {
+/* 네비게이션 바 스타일 */
+nav {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
+    padding: 0.5rem; /* 네비게이션 바의 패딩 */
+    background-color: #333;
+    margin-top: 0; /* 상단 마진을 제거합니다. 단위를 정확히 명시해야 합니다. */
+    width: 50%; /* 너비를 100%로 설정하여 전체 너비로 확장합니다. */
 }
 
-.product-item {
+/* 네비게이션 링크 스타일 */
+nav a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: white; /* 링크 색상을 흰색으로 설정 */
+    padding: 0.5rem 1rem; /* 링크의 패딩을 적당히 늘립니다. */
+    font-size: 1rem; /* 폰트 크기를 증가시켜 링크가 더 크게 보이게 합니다. */
+    margin-right: 1rem; /* 링크 사이의 간격을 조정합니다. 필요에 따라 'gap' 속성 대신 사용 */
+    border-radius: 4px; /* 링크에 둥근 모서리를 추가합니다. */
+}
+
+/* 네비게이션 바 링크에 호버 효과 추가 */
+nav a:hover {
+    background-color: #444; /* 호버 상태에서 링크 배경 색상 변경 */
+    color: #ddd; /* 호버 상태에서 링크 텍스트 색상 변경 */
+}
+
+/* 네비게이션 바와 기타 요소는 기존 스타일을 유지합니다. */
+
+/* 중앙 정렬을 위한 컨테이너 */
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 로그인 컨테이너 스타일링 */
+.login-container {
+    background-color: #424242;
+    padding: 5rem; /* 로그인 창의 패딩을 크게 증가 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: auto;
+    max-width: 800px; /* 로그인 컨테이너의 최대 너비를 크게 증가 */
+    max-height: 700px;
+}
+
+/* 폼 스타일링 */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 입력 필드 스타일링 */
+input[type='text'],
+input[type='password'] {
+    padding: 15px; /* 입력 필드의 패딩을 늘림 */
+    margin-bottom: 1.5rem; /* 입력 필드 간의 마진을 늘림 */
+    border-radius: 4px;
     border: 1px solid #ddd;
-    margin: 10px;
-    padding: 15px;
-    width: calc(33.333% - 20px);
+    background-color: #fff;
+    color: #333;
 }
 
-.product-item h2 {
-    color: #333;
-    margin: 0 0 10px 0;
+/* 버튼 스타일링 */
+button {
+    padding: 15px; /* 버튼의 패딩을 늘림 */
+    border: none;
+    border-radius: 4px;
+    background-color: #0066cc;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem; /* 버튼 위의 마진 추가 */
 }
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.shop-link {
+    display: inline-block; /* 블록 레벨 요소처럼 스타일링 */
+    font-size: 1.25rem; /* 글꼴 크기를 증가 */
+    padding: 0.5rem 1rem; /* 패딩을 추가하여 링크 크기를 늘림 */
+    margin: 1rem 0; /* 상하 마진을 추가 */
+    background-color: #0066cc; /* 배경색을 추가 */
+    color: white; /* 글꼴 색상을 흰색으로 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+    border-radius: 4px; /* 모서리를 둥글게 */
+    transition: background-color 0.2s; /* 배경색 변경에 대한 전환 효과 */
+}
+
+.shop-link:hover {
+    background-color: #0056b3; /* 호버 상태에서 배경색을 변경 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    nav {
+        padding: 0.5rem; /* 모바일 화면에서 네비게이션 바의 패딩을 줄입니다. */
+    }
+    nav a {
+        padding: 0.3rem 0.6rem; /* 모바일 화면에서 링크의 패딩을 조정합니다. */
+        font-size: 1rem; /* 모바일 화면에서 폰트 크기를 조정합니다. */
+    }
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽 정렬을 중앙 정렬로 변경해야 한다면 center로 변경하세요 */
+    gap: 20px;
+  }
+  
+  li {
+    
+    padding: 10px;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-height: 120px;
+    width: 60%;
+    margin: 0 auto; /* 상하 마진을 유지하면서 좌우 마진을 auto로 설정하여 가운데 정렬 */
+    /* 추가적인 마진이나 패딩이 적용되어 있지 않은지 확인하세요 */
+  }
+  
+  a, button {
+    display: inline-block;
+    margin-left: auto; /* 요소를 중앙으로 정렬 */
+  margin-right: auto; /* 요소를 중앙으로 정렬 */
+    padding: 10px 15px;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    background-color: #007bff; /* 배경색 설정 */
+    color: white; /* 글자색 설정 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    border: none; /* 버튼 테두리 제거 */
+  }
+  
+  form {
+    display: flex;
+    justify-content: center; /* 가로축 가운데 정렬 */
+    align-items: center; /* 세로축 가운데 정렬 */
+  }
+  
+  input[type="number"] {
+    width: 100px;
+
+  }
+
+/* proudct_detail 스타일 */
+.card {
+    background-color: #333; /* 카드 배경 색상 */
+    color: #fff; /* 텍스트 색상 */
+    border-radius: 8px; /* 둥근 모서리 테두리 */
+    padding: 20px; /* 내부 여백 */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* 그림자 효과 */
+    max-width: 500px; /* 최대 너비 */
+    margin: 20px auto; /* 위아래 여백과 가운데 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+  }
+  
+  /* h1 태그 스타일 */
+  .card h1 {
+    margin-top: 0.5em; /* h1 태그 상단 여백 */
+    margin-bottom: 0.5em; /* h1 태그 하단 여백 */
+  }
+  
+  /* form과 a 태그 스타일 */
+  .card form,
+  .card a {
+    margin-top: 10px; /* 버튼과 링크 상단 여백 */
+  }
+  
+  /* button 스타일 */
+  .card button {
+    background-color: #0066ff; /* 버튼 배경 색상 */
+    color: white; /* 버튼 텍스트 색상 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 버튼 내부 여백 */
+    margin: 10px 0; /* 버튼 상하 여백 */
+    border-radius: 4px; /* 버튼 둥근 모서리 */
+    cursor: pointer; /* 마우스 오버시 커서 변경 */
+    width: auto; /* 버튼 너비를 자동으로 설정하여 내용물에 맞춤 */
+    max-width: 200px; /* 버튼의 최대 너비를 제한 */
+    font-size: 16px; /* 폰트 사이즈 */
+  }
+  
+  /* button 호버 효과 */
+  .card button:hover {
+    background-color: #0056cc; /* 버튼 호버 색상 변경 */
+  }
+  
+  /* a 태그 스타일 */
+  .card a {
+    display: inline-block; /* 링크를 인라인 블록 요소로 변경 */
+    background-color: #f2f2f2; /* 링크 배경 색상 */
+    color: #333; /* 링크 텍스트 색상 */
+    padding: 8px 16px; /* 링크 내부 여백 */
+    border-radius: 4px; /* 링크 둥근 모서리 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    margin: 10px 0; /* 링크 상하 여백 */
+  }
+  
+  /* a 태그 호버 효과 */
+  .card a:hover {
+    background-color: #ddd; /* 링크 호버 배경 색상 변경 */
+  }

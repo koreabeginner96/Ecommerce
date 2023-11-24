@@ -28,5 +28,6 @@ urlpatterns = [
     path('payment/process/', views.payment_process, name='payment_process'),# 결제 처리 뷰: 사용자가 결제를 진행하는 과정을 처리합니다.
     path('payment/done/', views.payment_done, name='payment_done'),# 결제 완료 뷰: 결제가 성공적으로 완료되었을 때 표시되는 페이지를 처리합니다.
     path('payment/canceled/', views.payment_canceled, name='payment_canceled'),# 결제 취소 뷰: 결제가 취소되었거나 실패했을 때 표시되는 페이지를 처리합니다.   
-    path('cart/update/<int:product_id>/', update_cart, name='update_cart'),
+    path('cart/update/<int:product_id>/', update_cart, name='update_cart'),#장바구니 update url
+    path('cart/remove/<int:product_id>/', views.remove_cart, name='remove_cart'),#장바구니 제거 url
 ]

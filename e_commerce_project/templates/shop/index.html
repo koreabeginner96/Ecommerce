@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Shop Home</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}
+Shop Page
+{% endblock %}
+
+{% block content %}
     <h1>Welcome to Our Shop!</h1>
-    <p>This is the home page for our shop.</p>
-    <!-- 여기에 추가적인 HTML 및 템플릿 태그를 넣을 수 있습니다. -->
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to the Shop</title>
-</head>
-<body>
-    <h1>Welcome to Our Shop!</h1>
-    <!-- 추가적인 콘텐츠 -->
-</body>
-</html>
+    <p>추후 할인정보나 메인 제품을 여기에 소개 할 수 있도록 할 것입니다.</p>
+    <a href="{% url 'product_list' %}"> 등록된 제품 보러가기</a>
+{% endblock %}
