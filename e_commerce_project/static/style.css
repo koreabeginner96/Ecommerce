@@ -37,18 +37,19 @@ nav {
     background-color: #333;
     margin-top: 0; /* 상단 마진을 제거합니다. 단위를 정확히 명시해야 합니다. */
     width: 50%; /* 너비를 100%로 설정하여 전체 너비로 확장합니다. */
+    margin-right: 1rem; /* 오른쪽 마진을 1rem으로 설정 (간격 조절) */
 }
 
 /* 네비게이션 링크 스타일 */
 nav a {
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: white; /* 링크 색상을 흰색으로 설정 */
-    padding: 0.5rem 1rem; /* 링크의 패딩을 적당히 늘립니다. */
-    font-size: 1rem; /* 폰트 크기를 증가시켜 링크가 더 크게 보이게 합니다. */
-    margin-right: 1rem; /* 링크 사이의 간격을 조정합니다. 필요에 따라 'gap' 속성 대신 사용 */
-    border-radius: 4px; /* 링크에 둥근 모서리를 추가합니다. */
+    margin-right: 5px; /* 기존 10px에서 줄여서 간격을 좁힙니다. */
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin: 0 0.5rem; /* 오른쪽과 왼쪽 마진을 기존 1rem에서 0.5rem으로 줄입니다. */
+    border-radius: 4px;
 }
-
 /* 네비게이션 바 링크에 호버 효과 추가 */
 nav a:hover {
     background-color: #444; /* 호버 상태에서 링크 배경 색상 변경 */
